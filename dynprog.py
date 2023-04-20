@@ -61,8 +61,8 @@ class DroneExtinguisher:
         """
         
         # TODO
-        raise NotImplementedError()
-
+        euclid_distance = float(math.sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2))
+        return euclid_distance
 
     def fill_travel_costs_in_liters(self):
         """
