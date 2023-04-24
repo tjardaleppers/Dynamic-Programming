@@ -98,6 +98,7 @@ class DroneExtinguisher:
           int: the amount of time (measured in liters) that we are idle on the day   
         """
         
+        # print(f'compute_sequence_idle_time_in_liters, i: {i}, j: {j}')
         active_time = 0
 
         for j in range(i, j+1):
@@ -105,10 +106,12 @@ class DroneExtinguisher:
         
         idle_time = self.liter_budget_per_day - active_time
         
+        # print(int(idle_time))
         return int(idle_time)
 
 
     def compute_idle_cost(self, i, j, idle_time_in_liters):
+        # sourcery skip: assign-if-exp, inline-immediately-returned-variable
         """
         Function that transforms the amount of time that we are idle on a day if we empty self.bags[i:j+1]
         on a day (idle_time_in_liters) into a quantity that we want to directly optimize using the formula
@@ -117,7 +120,7 @@ class DroneExtinguisher:
         Moreover, if self.bags[i:j+1] are the last bags that are transported on the final day, the idle cost is 0 
         as the operation has been completed. In all other cases, we use the formula from the assignment text. 
 
-        You may not need to use every argument of this function
+        You may not need to use every argument of this function.
 
         :param i: integer index
         :param j: integer index
@@ -127,9 +130,16 @@ class DroneExtinguisher:
           - integer: the cost of being idle on a day corresponding to idle_time_in_liters
         """
         
-        # TODO
-        raise NotImplementedError()
+        if idle_time_in_liters < 0:
+            return np.inf
+        elif j+1 == len(self.bags): # all bags are transported
+            return 0
+        else:
+          idle_cost = idle_time_in_liters**3
+
+          return idle_cost
     
+
     def compute_sequence_usage_cost(self, i: int, j: int, k: int) -> float:
         """
         Function that computes and returns the cost of using drone k for self.bags[i:j+1], making use of
@@ -159,6 +169,7 @@ class DroneExtinguisher:
         
         # TODO
         raise NotImplementedError()
+
 
     def lowest_cost(self) -> float:
         """
