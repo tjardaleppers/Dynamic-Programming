@@ -59,10 +59,11 @@ class DroneExtinguisher:
         Returns 
           float: the Euclidean distance between the two points
         """
-        
-        # TODO
-        euclid_distance = float(math.sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2))
-        return euclid_distance
+
+        euclidean_distance = float(math.sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2))
+
+        return euclidean_distance
+
 
     def fill_travel_costs_in_liters(self):
         """
@@ -74,15 +75,11 @@ class DroneExtinguisher:
         The function does not return anything.  
         """
         
-        # TODO
-        # the distance between the forest and each bag is calculated, this distance is multiplied by 2 to get the
-        # total distance: first getting the bag and then returning it to the forest
-        # the total distance(s) is/are converted to the costs in liters by multiplying them by the liter_cost_per_km
-        # each of the costs in liters are then added to the list travel_costs_in_liters
         for i in range(len(self.bags)):
             total_distance = 2 * self.compute_euclidean_distance(self.forest_location, self.bag_locations[i])
             liter_costs = np.ceil(self.liter_cost_per_km * total_distance)
             self.travel_costs_in_liters.append(liter_costs)
+
 
     def compute_sequence_idle_time_in_liters(self, i, j):
         """
@@ -101,14 +98,15 @@ class DroneExtinguisher:
           int: the amount of time (measured in liters) that we are idle on the day   
         """
         
-        # TODO
-        idle_time_list = []
         active_time = 0
+
         for j in range(i, j+1):
             active_time += self.travel_costs_in_liters[j] + self.bags[j]
-            idle_time = self.liter_budget_per_day - active_time
-            idle_time_list.append(idle_time)
-        return int(idle_time_list[j])
+        
+        idle_time = self.liter_budget_per_day - active_time
+        
+        return int(idle_time)
+
 
     def compute_idle_cost(self, i, j, idle_time_in_liters):
         """

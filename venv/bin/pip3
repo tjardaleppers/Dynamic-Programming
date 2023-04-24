@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/tjardaleppers/Documents/Pre-master Bio-informatica/Algorithms and Data Structures/Group assignments/a3/Dynamic Programming/venv/bin/python3" "$0" "$@"
+'''exec' "/Users/tjardaleppers/Documents/Pre-master Bio-informatica/Algorithms and Data Structures/Group assignments/a3/Dynamic-Programming/venv/bin/python3" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

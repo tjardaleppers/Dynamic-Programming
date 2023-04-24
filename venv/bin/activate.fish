@@ -30,7 +30,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/tjardaleppers/Documents/Pre-master Bio-informatica/Algorithms and Data Structures/Group assignments/a3/Dynamic Programming/venv"
+set -gx VIRTUAL_ENV "/Users/tjardaleppers/Documents/Pre-master Bio-informatica/Algorithms and Data Structures/Group assignments/a3/Dynamic-Programming/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
