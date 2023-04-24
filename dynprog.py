@@ -102,18 +102,12 @@ class DroneExtinguisher:
         """
         
         # TODO
-
         idle_time_list = []
         active_time = 0
-        for j in range(i, 3):
-            print("index j is", j)
+        for j in range(i, j+1):
             active_time += self.travel_costs_in_liters[j] + self.bags[j]
-            print("active_time is", active_time)
             idle_time = self.liter_budget_per_day - active_time
-            print("idle_time is", idle_time)
             idle_time_list.append(idle_time)
-            print(idle_time_list)
-            print(idle_time_list[j])
         return int(idle_time_list[j])
 
     def compute_idle_cost(self, i, j, idle_time_in_liters):
