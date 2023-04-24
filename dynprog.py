@@ -75,9 +75,9 @@ class DroneExtinguisher:
         """
         
         # TODO
-        # the distance between the forest and each bag is calculated, this distance is multiplied by 2 to get the total distance:
-        # first getting the bag and then returning to the forest
-        # the total distances are converted to the costs in liters by multiplying them by the liter_cost_per_km
+        # the distance between the forest and each bag is calculated, this distance is multiplied by 2 to get the
+        # total distance: first getting the bag and then returning it to the forest
+        # the total distance(s) is/are converted to the costs in liters by multiplying them by the liter_cost_per_km
         # each of the costs in liters are then added to the list travel_costs_in_liters
         for i in range(len(self.bags)):
             total_distance = 2 * self.compute_euclidean_distance(self.forest_location, self.bag_locations[i])
@@ -102,7 +102,19 @@ class DroneExtinguisher:
         """
         
         # TODO
-        raise NotImplementedError()
+
+        idle_time_list = []
+        active_time = 0
+        for j in range(i, 3):
+            print("index j is", j)
+            active_time += self.travel_costs_in_liters[j] + self.bags[j]
+            print("active_time is", active_time)
+            idle_time = self.liter_budget_per_day - active_time
+            print("idle_time is", idle_time)
+            idle_time_list.append(idle_time)
+            print(idle_time_list)
+            print(idle_time_list[j])
+        return int(idle_time_list[j])
 
     def compute_idle_cost(self, i, j, idle_time_in_liters):
         """
