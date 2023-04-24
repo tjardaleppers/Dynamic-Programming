@@ -98,20 +98,17 @@ class DroneExtinguisher:
           int: the amount of time (measured in liters) that we are idle on the day   
         """
         
-        # print(f'compute_sequence_idle_time_in_liters, i: {i}, j: {j}')
         active_time = 0
 
-        for j in range(i, j+1):
-            active_time += self.travel_costs_in_liters[j] + self.bags[j]
+        for n in range(i, j+1):
+            active_time += self.travel_costs_in_liters[n] + self.bags[n]
         
         idle_time = self.liter_budget_per_day - active_time
         
-        # print(int(idle_time))
         return int(idle_time)
 
 
     def compute_idle_cost(self, i, j, idle_time_in_liters):
-        # sourcery skip: assign-if-exp, inline-immediately-returned-variable
         """
         Function that transforms the amount of time that we are idle on a day if we empty self.bags[i:j+1]
         on a day (idle_time_in_liters) into a quantity that we want to directly optimize using the formula
@@ -152,11 +149,16 @@ class DroneExtinguisher:
         :param k: integer index
 
         Returns
-          - float: the cost of usign drone k for bags[i:j+1] 
+          - float: the cost of using drone k for bags[i:j+1] 
         """
         
-        # TODO
-        raise NotImplementedError()
+        usage_cost = 0
+
+        for n in range(i, j+1):
+            usage_cost += self.usage_cost[n, k]
+        
+        return usage_cost
+
 
 
     def dynamic_programming(self):
