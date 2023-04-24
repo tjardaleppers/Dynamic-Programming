@@ -155,6 +155,7 @@ class TestDroneExtinguisher(unittest.TestCase):
         usage_cost = np.array([[0],
                             [0],
                             [0],
+                            [0],
                             [0]])
 
         solution = 2413
@@ -183,9 +184,10 @@ class TestDroneExtinguisher(unittest.TestCase):
         usage_cost = np.array([[1],
                              [1],
                              [1],
+                             [1],
                              [1]])
 
-        solution = 2417
+        solution = 2418
 
         de = DroneExtinguisher(
             forest_location=forest_location,
@@ -209,6 +211,7 @@ class TestDroneExtinguisher(unittest.TestCase):
         liter_cost_per_km = 0.1 # now there is a constant cost of 1 liter traveling time per bag
         liter_budget_per_day = 20
         usage_cost = np.array([[1,1,0],
+                             [1,1,0],
                              [1,1,0],
                              [1,1,0],
                              [1,1,0]])
