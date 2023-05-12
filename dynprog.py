@@ -129,12 +129,11 @@ class DroneExtinguisher:
         
         if idle_time_in_liters < 0:
             return np.inf
-        elif j+1 == len(self.bags): # all bags are transported
+        elif j+1 == len(self.bags):  # all bags are transported
             return 0
         else:
-          idle_cost = idle_time_in_liters**3
-
-          return idle_cost
+            idle_cost = idle_time_in_liters**3
+            return idle_cost
     
 
     def compute_sequence_usage_cost(self, i: int, j: int, k: int) -> float:
@@ -151,12 +150,12 @@ class DroneExtinguisher:
         Returns
           - float: the cost of using drone k for bags[i:j+1] 
         """
-        
+
         usage_cost = 0
 
         for n in range(i, j+1):
             usage_cost += self.usage_cost[n, k]
-        
+
         return usage_cost
 
 
@@ -170,6 +169,18 @@ class DroneExtinguisher:
         """
         
         # TODO
+        # loops over every row and every column and fills the self.idle_cost structure with
+        # the idle cost values calculated with the compute_sequence_idle_time_in_liters function
+        for i in range(0, len(self.bags)):
+            for j in range(0, len(self.bags)):
+                if i > j:
+                    self.idle_cost[i][j] = np.inf
+                else:
+                    if self.compute_sequence_idle_time_in_liters(i, j)**3 < 1:
+                        self.idle_cost[i][j] = np.inf
+                    else:
+                        self.idle_cost[i][j] = self.compute_sequence_idle_time_in_liters(i, j)**3
+
         raise NotImplementedError()
 
 
