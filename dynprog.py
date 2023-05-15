@@ -154,11 +154,13 @@ class DroneExtinguisher:
         
         usage_cost = 0
 
+        print(f'number of bags: {self.num_bags}, number of drones: {self.num_drones}') 
+        print(self.usage_cost)
+
         for n in range(i, j+1):
             usage_cost += self.usage_cost[n, k]
         
         return usage_cost
-
 
 
     def dynamic_programming(self):
