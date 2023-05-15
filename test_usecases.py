@@ -95,8 +95,8 @@ class TestDroneExtinguisher(unittest.TestCase):
     def test_dynamic_programming_simple(self):
         forest_location = (0,0)
         bags = [6,3,8,9]
-        bag_locations = [(0,0) for _ in range(len(bags))] # no travel distance
-        liter_cost_per_km = 1 # doesn't matter as there is no travel distance
+        bag_locations = [(0,0) for _ in range(len(bags))]  # no travel distance
+        liter_cost_per_km = 1  # doesn't matter as there is no travel distance
         liter_budget_per_day = 10
         usage_cost = np.array([[0],
                             [0],
