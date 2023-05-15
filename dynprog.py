@@ -153,9 +153,6 @@ class DroneExtinguisher:
 
         usage_cost = 0
 
-        print(f'number of bags: {self.num_bags}, number of drones: {self.num_drones}') 
-        print(self.usage_cost)
-
         for n in range(i, j+1):
             usage_cost += self.usage_cost[n, k]
 
@@ -170,20 +167,16 @@ class DroneExtinguisher:
         This function does not return anything. 
         """
         
-        # TODO
         # loops over every row and every column and fills the self.idle_cost structure with
         # the idle cost values calculated with the compute_sequence_idle_time_in_liters function
-        for i in range(0, len(self.bags)):
-            for j in range(0, len(self.bags)):
+        for i in range(len(self.bags)):
+            for j in range(len(self.bags)):
                 if i > j:
                     self.idle_cost[i][j] = np.inf
+                elif self.compute_sequence_idle_time_in_liters(i, j)**3 < 1:
+                    self.idle_cost[i][j] = np.inf
                 else:
-                    if self.compute_sequence_idle_time_in_liters(i, j)**3 < 1:
-                        self.idle_cost[i][j] = np.inf
-                    else:
-                        self.idle_cost[i][j] = self.compute_sequence_idle_time_in_liters(i, j)**3
-
-        raise NotImplementedError()
+                    self.idle_cost[i][j] = self.compute_sequence_idle_time_in_liters(i, j)**3
 
 
     def lowest_cost(self) -> float:
