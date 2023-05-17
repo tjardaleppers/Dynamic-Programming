@@ -181,21 +181,21 @@ class DroneExtinguisher:
         print(self.idle_cost)
 
         cost = 0
-
         # Loop over the bags
         for i in range(len(self.bags)):
-            # First bag so the idle cost becomes 0
+            # First bag, the idle cost is 0
             if i == 0:
                 cost = self.usage_cost[i][0]
                 print(cost)
             else:
+                # Transporting multiple bags on one day
                 if self.idle_cost[0][i] != np.inf:
                     cost += self.usage_cost[i][0] + self.idle_cost[0][i]
+                # Transporting bags on different days
                 else:
                     cost += self.usage_cost[i][0] + self.idle_cost[i][i]
 
-                print(cost)
-
+                # Fills the optimal cost array with the cost (idle_cost of last day is deducted)
                 if self.idle_cost[0][i] != np.inf:
                     self.optimal_cost[i+1][0] = cost - self.idle_cost[0][i]
                 else:
