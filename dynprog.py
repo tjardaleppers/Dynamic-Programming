@@ -180,29 +180,39 @@ class DroneExtinguisher:
 
         print(self.idle_cost)
 
-        active_time = 0
-        complete_costs = 0
-        total_idle_cost = 0
+        cost = 0
 
         # Loop over the bags
         for i in range(len(self.bags)):
-            # Calculate the active time by adding travel costs and bag quantities
-            active_time += int(self.travel_costs_in_liters[i] + self.bags[i])
-            print("active_time is", active_time)
-
-            # Check if the liter budget per day is greater than the active time
-            if self.liter_budget_per_day > active_time:
-                idle_cost = 0
+            # First bag so the idle cost becomes 0
+            if i == 0:
+                cost = self.usage_cost[i][0]
+                print(cost)
             else:
-                # If the liter budget per day is exceeded, consider the idle cost
-                idle_cost = self.idle_cost[i][i]
+                if self.idle_cost[0][i] != np.inf:
+                    cost += self.usage_cost[i][0] + self.idle_cost[0][i]
+                else:
+                    cost += self.usage_cost[i][0] + self.idle_cost[i][i]
 
-            total_idle_cost += idle_cost
-            complete_costs += self.usage_cost[i][0] + total_idle_cost
-            print("complete_costs are", complete_costs)
-            self.optimal_cost[i+1][0] = complete_costs
+                print(cost)
 
-            print(self.optimal_cost)
+                if self.idle_cost[0][i] != np.inf:
+                    self.optimal_cost[i+1][0] = cost - self.idle_cost[0][i]
+                else:
+                    self.optimal_cost[i+1][0] = cost - self.idle_cost[i][i]
+
+        print(self.optimal_cost)
+
+
+
+
+
+
+
+
+
+
+
 
 
 

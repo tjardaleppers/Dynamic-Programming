@@ -119,7 +119,7 @@ class TestDroneExtinguisher(unittest.TestCase):
         lowest_cost = de.lowest_cost()
         self.assertEqual(lowest_cost, solution)
 
-    def test_dyanmic_programming_one_day(self):
+    def test_dynamic_programming_one_day(self):
         forest_location = (0,0)
         bags = [10,3,1]
         bag_locations = [(0,0) for _ in range(len(bags))] # no travel distance
@@ -146,7 +146,7 @@ class TestDroneExtinguisher(unittest.TestCase):
         lowest_cost = de.lowest_cost()
         self.assertEqual(lowest_cost, solution)
 
-    def test_dyanmic_programming_no_travel_cost(self):
+    def test_dynamic_programming_no_travel_cost(self):
         forest_location = (0,0)
         bags = [4,10,3,4,20]
         bag_locations = [(0,0) for _ in range(len(bags))] # no travel distance
@@ -175,7 +175,7 @@ class TestDroneExtinguisher(unittest.TestCase):
         self.assertEqual(lowest_cost, solution)
 
 
-    def test_dyanmic_programming_with_travel_cost(self):
+    def test_dynamic_programming_with_travel_cost(self):
         forest_location = (0,0)
         bags = [3,9,2,3,19]
         bag_locations = [(3,4) for _ in range(len(bags))] # constant travel distance 5
@@ -204,7 +204,8 @@ class TestDroneExtinguisher(unittest.TestCase):
         self.assertEqual(lowest_cost, solution)
 
 
-    def test_dyanmic_programming_with_travel_cost_multiple_drones(self):
+    def test_dynamic_programming_with_travel_cost_multiple_drones(self):
+
         forest_location = (0,0)
         bags = [3,9,2,3,19]
         bag_locations = [(3,4) for _ in range(len(bags))] # constant travel distance 5
