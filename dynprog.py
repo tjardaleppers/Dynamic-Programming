@@ -178,6 +178,44 @@ class DroneExtinguisher:
                 else:
                     self.idle_cost[i][j] = self.compute_sequence_idle_time_in_liters(i, j)**3
 
+        print(self.idle_cost)
+
+        # num_bags = len(self.idle_cost)
+        # for bag in range(num_bags):
+        #    # Check the idle cost of transporting only the current bag
+        #    idle_cost = self.idle_cost[bag][bag]
+        #    if idle_cost == np.inf:
+        #        print("Cannot transport bag", bag)
+        #    else:
+        #        print("Check idle_cost of transporting only bag", bag, "->", idle_cost)
+
+        # Check the idle cost of transporting bags from the current bag to the next bag
+        #    for next_bag in range(bag + 1, num_bags):
+        #        idle_cost = self.idle_cost[bag][next_bag]
+        #        if idle_cost == np.inf:
+        #            print("Cannot transport bags", bag, "to", next_bag)
+        #        else:
+        #            print("Check idle_cost of transporting bags", bag, "to", next_bag, "->", idle_cost)
+
+        active_time = 0
+        complete_costs = 0
+        for i in range(len(self.bags)):
+            active_time += int(self.travel_costs_in_liters[i] + self.bags[i])
+            print("active_time is", active_time)
+            if self.liter_budget_per_day > active_time:
+                idle_cost = 0
+                complete_costs += self.usage_cost[i][0] + idle_cost
+                print("complete_costs are", complete_costs)
+                self.optimal_cost[i+1][0] = complete_costs
+            else:
+                idle_cost = self.idle_cost[i][i]
+                complete_costs += self.usage_cost[i][0] + idle_cost
+                print("complete_costs are", complete_costs)
+                self.optimal_cost[i+1][0] = complete_costs
+        print(self.optimal_cost)
+
+
+
 
     def lowest_cost(self) -> float:
         """
@@ -191,7 +229,6 @@ class DroneExtinguisher:
         
         # TODO
         raise NotImplementedError()
-
 
     def backtrace_solution(self) -> typing.List[int]:
         """
