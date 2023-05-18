@@ -173,7 +173,7 @@ class DroneExtinguisher:
             for j in range(len(self.bags)):
                 if i > j:
                     self.idle_cost[i][j] = np.inf
-                elif self.compute_sequence_idle_time_in_liters(i, j)**3 < 1:
+                elif self.compute_sequence_idle_time_in_liters(i, j)**3 < 0:
                     self.idle_cost[i][j] = np.inf
                 else:
                     self.idle_cost[i][j] = self.compute_sequence_idle_time_in_liters(i, j)**3
