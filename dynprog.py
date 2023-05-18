@@ -178,6 +178,8 @@ class DroneExtinguisher:
                 else:
                     self.idle_cost[i][j] = self.compute_sequence_idle_time_in_liters(i, j)**3
 
+        print(f'bags: {self.bags}, drones: {self.num_drones}, usage costs: {self.usage_cost}')
+
 
     def lowest_cost(self) -> float:
         """
