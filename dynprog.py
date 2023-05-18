@@ -178,9 +178,8 @@ class DroneExtinguisher:
                 else:
                     self.idle_cost[i][j] = self.compute_sequence_idle_time_in_liters(i, j)**3
 
-<<<<<<< HEAD
         print(f'bags: {self.bags}, drones: {self.num_drones}, usage costs: {self.usage_cost}')
-=======
+
         print(self.idle_cost)
 
         cost = 0
@@ -207,22 +206,6 @@ class DroneExtinguisher:
         print(self.optimal_cost)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> 7ac413aa36ce419ebaad9952a8bcb2483d1ae0bd
-
-
     def lowest_cost(self) -> float:
         """
         Returns the lowest cost at which we can empty the water bags to extinguish to forest fire. Inside of this function,
@@ -235,6 +218,7 @@ class DroneExtinguisher:
         
         # TODO
         raise NotImplementedError()
+
 
     def backtrace_solution(self) -> typing.List[int]:
         """
