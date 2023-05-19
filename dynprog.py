@@ -180,8 +180,6 @@ class DroneExtinguisher:
                 else:
                     self.idle_cost[i][j] = self.compute_sequence_idle_time_in_liters(i, j)**3
 
-        print(f'bags: {self.bags}, drones: {self.num_drones}, usage costs: {self.usage_cost}')
-        print(self.idle_cost)
 
         self.optimal_cost[0] = 0   # base case: transporting no bags at all
         k = 0  # there is only one drone
@@ -208,7 +206,6 @@ class DroneExtinguisher:
           - float: the lowest cost
         """
         
-        # TODO
         lowest_cost = self.optimal_cost[self.num_bags][0]
         # check if the lowest_cost is an acceptable value
         if lowest_cost == np.inf:
