@@ -47,6 +47,7 @@ class DroneExtinguisher:
         # reconstructing what bags we empty on every day in the forest
         self.backtrace_memory = dict()
     
+
     @staticmethod
     def compute_euclidean_distance(point1: typing.Tuple[float, float], point2: typing.Tuple[float, float]) -> float:
         """
@@ -167,8 +168,7 @@ class DroneExtinguisher:
         This function does not return anything. 
         """
         
-        # loops over every row and every column and fills the self.idle_cost structure with
-        # the idle cost values calculated with the compute_sequence_idle_time_in_liters function
+        # loops over every row and every column and fills the self.idle_cost structure with the idle cost values 
         for i in range(len(self.bags)):
             for j in range(len(self.bags)):
                 if i > j:
@@ -178,32 +178,25 @@ class DroneExtinguisher:
                 else:
                     self.idle_cost[i][j] = self.compute_sequence_idle_time_in_liters(i, j)**3
 
-        print(f'bags: {self.bags}, drones: {self.num_drones}, usage costs: {self.usage_cost}')
-
-        print(self.idle_cost)
-
         cost = 0
         # Loop over the bags
-        for i in range(len(self.bags)):
+        for bag in range(len(self.bags)):
             # First bag, the idle cost is 0
-            if i == 0:
-                cost = self.usage_cost[i][0]
-                print(cost)
+            if bag == 0:
+                cost = self.usage_cost[bag][0]
             else:
                 # Transporting multiple bags on one day
-                if self.idle_cost[0][i] != np.inf:
-                    cost += self.usage_cost[i][0] + self.idle_cost[0][i]
+                if self.idle_cost[0][bag] != np.inf:
+                    cost += self.usage_cost[bag][0] + self.idle_cost[0][bag]
                 # Transporting bags on different days
                 else:
-                    cost += self.usage_cost[i][0] + self.idle_cost[i][i]
+                    cost += self.usage_cost[bag][0] + self.idle_cost[bag][bag]
 
                 # Fills the optimal cost array with the cost (idle_cost of last day is deducted)
-                if self.idle_cost[0][i] != np.inf:
-                    self.optimal_cost[i+1][0] = cost - self.idle_cost[0][i]
+                if self.idle_cost[0][bag] != np.inf:
+                    self.optimal_cost[bag+1][0] = cost - self.idle_cost[0][bag]
                 else:
-                    self.optimal_cost[i+1][0] = cost - self.idle_cost[i][i]
-
-        print(self.optimal_cost)
+                    self.optimal_cost[bag+1][0] = cost - self.idle_cost[bag][bag]
 
 
     def lowest_cost(self) -> float:
