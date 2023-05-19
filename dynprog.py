@@ -171,29 +171,31 @@ class DroneExtinguisher:
         # filling the self.idle_cost memory structure
         for i in range(len(self.bags)):
             for j in range(len(self.bags)):
-                # bags are used in order (for example bag 2 to bag 0 is not valid), the valid costs are where
-                # the start index i is either smaller or equal to the end index j
-                if j >= i:
+                # bags are used in order (for example bag 2 to bag 0 is not valid)
+                if i > j:
                     continue
                 if self.compute_sequence_idle_time_in_liters(i, j)**3 < 0:
                     self.idle_cost[i][j] = np.inf
                 else:
                     self.idle_cost[i][j] = self.compute_sequence_idle_time_in_liters(i, j)**3
 
+        print("Idle costs are\n", self.idle_cost)
 
         self.optimal_cost[0] = 0   # base case: transporting no bags at all
         k = 0  # there is only one drone
         for i in range(len(self.bags)):
+            print("i is", i)
             costs = []
             for j in range(i+1):
+                print("j is", j)
                 print("optimal cost", self.optimal_cost[j])
                 print("idle cost", self.idle_cost[j, i])
                 print("usage cost", self.compute_sequence_usage_cost(j, i, k))
-                print("total sum", self.optimal_cost[j]+ self.idle_cost[j, i] + self.compute_sequence_usage_cost(j, i, k))
+                print("total sum", self.optimal_cost[j] + self.idle_cost[j, i] + self.compute_sequence_usage_cost(j, i, k))
                 costs.append(self.optimal_cost[j] + self.idle_cost[j, i] + self.compute_sequence_usage_cost(j, i, k))
 
                 self.optimal_cost[i+1] = min(costs)
-        print("Final optimal cost structure\n", self.optimal_cost)
+        print("Final optimal cost structure \n", self.optimal_cost)
 
 
     def lowest_cost(self) -> float:
