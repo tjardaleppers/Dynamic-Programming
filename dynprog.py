@@ -167,36 +167,35 @@ class DroneExtinguisher:
         In this function, we fill the memory structures self.idle_cost and self.optimal_cost making use of functions defined above. 
         This function does not return anything. 
         """
-        
-        # loops over every row and every column and fills the self.idle_cost structure with the idle cost values 
+
+        # filling the self.idle_cost memory structure
         for i in range(len(self.bags)):
             for j in range(len(self.bags)):
-                if i > j:
-                    self.idle_cost[i][j] = np.inf
-                elif self.compute_sequence_idle_time_in_liters(i, j)**3 < 1:
+                # bags are used in order (for example bag 2 to bag 0 is not valid), the valid costs are where
+                # the start index i is either smaller or equal to the end index j
+                if j >= i:
+                    continue
+                if self.compute_sequence_idle_time_in_liters(i, j)**3 < 0:
                     self.idle_cost[i][j] = np.inf
                 else:
                     self.idle_cost[i][j] = self.compute_sequence_idle_time_in_liters(i, j)**3
 
-        cost = 0
-        # Loop over the bags
-        for bag in range(len(self.bags)):
-            # First bag, the idle cost is 0
-            if bag == 0:
-                cost = self.usage_cost[bag][0]
-            else:
-                # Transporting multiple bags on one day
-                if self.idle_cost[0][bag] != np.inf:
-                    cost += self.usage_cost[bag][0] + self.idle_cost[0][bag]
-                # Transporting bags on different days
-                else:
-                    cost += self.usage_cost[bag][0] + self.idle_cost[bag][bag]
+        print(f'bags: {self.bags}, drones: {self.num_drones}, usage costs: {self.usage_cost}')
+        print(self.idle_cost)
 
-                # Fills the optimal cost array with the cost (idle_cost of last day is deducted)
-                if self.idle_cost[0][bag] != np.inf:
-                    self.optimal_cost[bag+1][0] = cost - self.idle_cost[0][bag]
-                else:
-                    self.optimal_cost[bag+1][0] = cost - self.idle_cost[bag][bag]
+        self.optimal_cost[0] = 0   # base case: transporting no bags at all
+        k = 0  # there is only one drone
+        for i in range(len(self.bags)):
+            costs = []
+            for j in range(i+1):
+                print("optimal cost", self.optimal_cost[j])
+                print("idle cost", self.idle_cost[j, i])
+                print("usage cost", self.compute_sequence_usage_cost(j, i, k))
+                print("total sum", self.optimal_cost[j]+ self.idle_cost[j, i] + self.compute_sequence_usage_cost(j, i, k))
+                costs.append(self.optimal_cost[j] + self.idle_cost[j, i] + self.compute_sequence_usage_cost(j, i, k))
+
+                self.optimal_cost[i+1] = min(costs)
+        print("Final optimal cost structure\n", self.optimal_cost)
 
 
     def lowest_cost(self) -> float:
@@ -210,7 +209,12 @@ class DroneExtinguisher:
         """
         
         # TODO
-        raise NotImplementedError()
+        lowest_cost = self.optimal_cost[self.num_bags][0]
+        # check if the lowest_cost is an acceptable value
+        if lowest_cost == np.inf:
+            return None
+        else:
+            return lowest_cost
 
 
     def backtrace_solution(self) -> typing.List[int]:
